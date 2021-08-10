@@ -17,6 +17,7 @@ func (m *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ok, tree := pretree.Query(r.Method, path)
 	if !ok {
 		http.NotFoundHandler().ServeHTTP(w, r)
+		return
 	}
 	rule := tree.Rule()
 	key := ShortPath(rule)
