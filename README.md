@@ -10,6 +10,10 @@ Routing variable writing format supports both :id and {id},but the actual storag
 
 See this document at [GoDoc](https://pkg.go.dev/github.com/obity/mux)
 
+# Install
+    
+    go get -u github.com/obity/mux@latest
+
 # ToDo
 
 - [ ] 需要获取路由中的{var}变量，handler处理需要这些参数值传输到后端
