@@ -2,10 +2,12 @@ package mux
 
 import "net/http"
 
-type Route struct {
+// 路由对应处理函数
+type route struct {
 	handler http.Handler
 }
 
-func NewRoute() *Route {
-	return &Route{}
+// 新建空路由工厂方法
+func newRoute() *route {
+	return &route{}
 }
