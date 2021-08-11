@@ -20,13 +20,21 @@ func (m *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	rule := tree.Rule()
-	key := ShortPath(rule)
+	key := shortPath(rule)
 	route := m.RouteGroup[key]
 	route.handler.ServeHTTP(w, r)
 }
 
 func NewMux() *Mux {
 	return &Mux{RouteGroup: make(map[string]*Route)}
+}
+
+func (m *Mux) Start(addr string) {
+	http.ListenAndServe(addr, m)
+}
+
+func (m *Mux) StartTLS(addr, certFile, keyFile string) {
+	http.ListenAndServeTLS(addr, certFile, keyFile, m)
 }
 
 func (m *Mux) GET(path string, f func(http.ResponseWriter, *http.Request)) {
@@ -69,13 +77,12 @@ func (m *Mux) AddRoute(method, path string, f func(http.ResponseWriter, *http.Re
 	route := NewRoute()
 	route.handler = http.HandlerFunc(f)
 	pretree.Store(method, path)
-	key := ShortPath(path)
+	key := shortPath(path)
 	m.RouteGroup[key] = route
 }
 
-func ShortPath(path string) string {
+func shortPath(path string) string {
 	h := sha1.New()
 	b := h.Sum([]byte(path))
 	return (string(b))
-
 }
