@@ -8,14 +8,16 @@ import (
 
 func main() {
 
-	r := mux.NewMux()
+	m := mux.NewMux()
 
-	r.GET("/test", TestHandler)
-	http.ListenAndServe("127.0.0.1:8000", r)
+	m.GET("/test/{id}", TestHandler)
+
+	http.ListenAndServe("127.0.0.1:8001", m)
 }
 
 func TestHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("hello, test"))
+	w.Write([]byte("matched:" + r.RequestURI))
+	return
 }
