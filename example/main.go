@@ -16,8 +16,10 @@ func main() {
 }
 
 func PetHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	ID := vars["id"]
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("TestHandler matched:" + r.RequestURI))
+	w.Write([]byte("ID:" + ID))
 	return
 }
 
