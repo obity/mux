@@ -17,3 +17,4 @@ See this document at [GoDoc](https://pkg.go.dev/github.com/obity/mux)
 # ToDo
 
 - [ ] 需要获取路由中的{var}变量，handler处理需要这些参数值传输到后端
+- [x] 抽象算法存储引擎,支持自定义算法，只要实现Engine接口就可以自己启用 
