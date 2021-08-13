@@ -10,7 +10,10 @@
 
 package mux
 
-import "net/http"
+import (
+	"context"
+	"net/http"
+)
 
 // 路由对应处理函数
 type route struct {
@@ -20,4 +23,26 @@ type route struct {
 // 新建空路由工厂方法
 func newRoute() *route {
 	return &route{}
+}
+
+type ContextType int
+
+const VarsKey ContextType = iota
+
+//  把路由变量放到http请求中传递
+//
+// Route variables are passed in HTTP requests
+func SetVars(r *http.Request, vars map[string]string) *http.Request {
+	return r.WithContext(context.WithValue(r.Context(), VarsKey, vars))
+}
+
+// 获取路由变量
+//
+// Get routing variables
+func Vars(r *http.Request) map[string]string {
+	v := r.Context().Value(VarsKey)
+	if nil == v {
+		return nil
+	}
+	return v.(map[string]string)
 }

@@ -12,7 +12,6 @@ package mux
 
 import (
 	"crypto/sha1"
-	"fmt"
 	"net/http"
 
 	"github.com/obity/mux/storage"
@@ -37,7 +36,7 @@ func (m *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.NotFoundHandler().ServeHTTP(w, r)
 		return
 	}
-	fmt.Printf("vars: %v", vars)
+	r = SetVars(r, vars)
 	key := shortPath(rule)
 	route := m.RouteGroup[key]
 	route.handler.ServeHTTP(w, r)
