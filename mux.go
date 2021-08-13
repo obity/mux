@@ -12,8 +12,10 @@ package mux
 
 import (
 	"crypto/sha1"
+	"fmt"
 	"net/http"
 
+	"github.com/obity/mux/storage"
 	"github.com/obity/pretree"
 )
 
@@ -21,7 +23,8 @@ import (
 //
 // Routing distributor storage structure
 type Mux struct {
-	RouteGroup map[string]*route
+	RouteGroup    map[string]*route
+	StorageEngine storage.Engine
 }
 
 // 实现 http.ServerHTTP 接口函数
@@ -29,13 +32,12 @@ type Mux struct {
 // Implement the http.ServerHTTP interface function
 func (m *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
-
-	ok, tree := pretree.Query(r.Method, path)
+	ok, rule, vars := m.StorageEngine.Query(r.Method, path)
 	if !ok {
 		http.NotFoundHandler().ServeHTTP(w, r)
 		return
 	}
-	rule := tree.Rule()
+	fmt.Printf("vars: %v", vars)
 	key := shortPath(rule)
 	route := m.RouteGroup[key]
 	route.handler.ServeHTTP(w, r)
@@ -45,7 +47,23 @@ func (m *Mux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 //
 // New route allocator factory function
 func NewMux() *Mux {
-	return &Mux{RouteGroup: make(map[string]*route)}
+	m := &Mux{RouteGroup: make(map[string]*route)}
+	m.Default()
+	return m
+}
+
+// 启用默认存储引擎
+//
+// Enable the default storage algorithm engine
+func (m *Mux) Default() {
+	m.SetEngine(pretree.NewPreTree())
+}
+
+// 修改存储算法引擎
+//
+// change storage algorithm engine
+func (m *Mux) SetEngine(e storage.Engine) {
+	m.StorageEngine = e
 }
 
 // 启动http服务器,请在添加完路由最后在启动
@@ -131,7 +149,7 @@ func (m *Mux) TRACE(path string, f func(http.ResponseWriter, *http.Request)) {
 func (m *Mux) AppendRoute(method, path string, f func(http.ResponseWriter, *http.Request)) {
 	route := newRoute()
 	route.handler = http.HandlerFunc(f)
-	pretree.Store(method, path)
+	m.StorageEngine.Store(method, path)
 	key := shortPath(path)
 	m.RouteGroup[key] = route
 }
