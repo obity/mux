@@ -18,3 +18,4 @@ See this document at [GoDoc](https://pkg.go.dev/github.com/obity/mux)
 
 - [x] 需要获取路由中的{var}变量，handler处理需要这些参数值传输到后端
 - [x] 抽象算法存储引擎,支持自定义算法，只要实现Engine接口就可以自己启用 
+- [x] 增加设置路由基础路径功能，统一设置API的版本如"/v1","/2"默认不启用

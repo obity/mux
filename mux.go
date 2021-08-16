@@ -22,6 +22,7 @@ import (
 //
 // Routing distributor storage structure
 type Mux struct {
+	basePath      string
 	RouteGroup    map[string]*route
 	StorageEngine storage.Engine
 }
@@ -77,6 +78,14 @@ func (m *Mux) Start(addr string) {
 // Start the https server with tls certificate, please start it after adding the route
 func (m *Mux) StartTLS(addr, certFile, keyFile string) {
 	http.ListenAndServeTLS(addr, certFile, keyFile, m)
+}
+
+// 设置基础路径，例如API版本"/v1","/v2"
+//
+// Set the basic path, such as API version "/v1" and "/v2"
+func (m *Mux) SetBasePath(basePath string) *Mux {
+	m.basePath = basePath
+	return m
 }
 
 // 新建GET请求路由
@@ -146,6 +155,9 @@ func (m *Mux) TRACE(path string, f func(http.ResponseWriter, *http.Request)) {
 //
 // Generic new route function
 func (m *Mux) AppendRoute(method, path string, f func(http.ResponseWriter, *http.Request)) {
+	if len(m.basePath) > 0 {
+		path = m.basePath + path
+	}
 	route := newRoute()
 	route.handler = http.HandlerFunc(f)
 	m.StorageEngine.Store(method, path)
