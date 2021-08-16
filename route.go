@@ -20,16 +20,21 @@ type route struct {
 	handler http.Handler
 }
 
-// 新建空路由工厂方法
+// 新建路由工厂方法
+//
+// New routing factory method
 func newRoute() *route {
 	return &route{}
 }
 
 type ContextType int
 
+// 路由变量存储在上下文中的key
+//
+// The key of the routing variable stored in the context
 const VarsKey ContextType = iota
 
-//  把路由变量放到http请求中传递
+// 把路由变量放到http请求中传递
 //
 // Route variables are passed in HTTP requests
 func SetVars(r *http.Request, vars map[string]string) *http.Request {

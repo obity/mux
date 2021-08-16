@@ -47,6 +47,13 @@ func ExampleMux_POST_2() {
 	m.POST("/sendemail", SendEmailandler)
 }
 
+func ExampleMux_SetBasePath() {
+	m := mux.NewMux().SetBasePath("/v1")
+	m.POST("/account", UserinfoHandler)                 // /v1/account
+	m.POST("/account/{id}/address", UserAddressHandler) // /v1/account/{id}/address
+	m.POST("/sendemail", SendEmailandler)               // /v1/sendemail
+}
+
 func PetHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("TestHandler matched:" + r.RequestURI))
