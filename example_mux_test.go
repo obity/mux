@@ -23,27 +23,16 @@ func ExampleNewMux() {
 	m.Start(":8001")
 }
 
-func ExampleMux_GET_1() {
+func ExampleMux_GET() {
 	m := mux.NewMux()
-	m.GET("/user/{id}", UserinfoHandler)
+	m.GET("/user/{id}", UserinfoHandler) // or m.GET("/user/:id", UserinfoHandler)
+
 }
 
-func ExampleMux_GET_2() {
-	m := mux.NewMux()
-	m.GET("/user/:id", UserinfoHandler)
-}
-
-func ExampleMux_POST_1() {
+func ExampleMux_POST() {
 	m := mux.NewMux()
 	m.POST("/account", UserinfoHandler)
-	m.POST("/account/:id/address", UserAddressHandler)
-	m.POST("/sendemail", SendEmailandler)
-}
-
-func ExampleMux_POST_2() {
-	m := mux.NewMux()
-	m.POST("/account", UserinfoHandler)
-	m.POST("/account/{id}/address", UserAddressHandler)
+	m.POST("/account/:id/address", UserAddressHandler) // or m.POST("/account/{id}/address", UserAddressHandler)
 	m.POST("/sendemail", SendEmailandler)
 }
 
