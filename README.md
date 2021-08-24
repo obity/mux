@@ -19,3 +19,57 @@ See this document at [GoDoc](https://pkg.go.dev/github.com/obity/mux)
 - [x] 需要获取路由中的{var}变量，handler处理需要这些参数值传输到后端
 - [x] 抽象算法存储引擎,支持自定义算法，只要实现Engine接口就可以自己启用 
 - [x] 增加设置路由基础路径功能，统一设置API的版本如"/v1","/2"默认不启用
+
+# Example
+```
+package main
+
+import (
+	"net/http"
+
+	"github.com/obity/mux"
+)
+
+func main() {
+	m := mux.NewMux()
+	m.GET("/pet/findByStatus", Findbystatus)
+	m.GET("/pet/{id}", PetHandler)
+	m.POST("/user/createWithList", Createwithlist)
+	m.DELETE("/user/:username", Userinfo)
+	m.Start(":8001")
+}
+
+func PetHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	ID := vars["id"]
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("ID:" + ID))
+	return
+}
+
+func Findbystatus(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("FindByStatus matched:" + r.RequestURI))
+	return
+}
+
+func Createwithlist(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("CreateWithList matched:" + r.RequestURI))
+	return
+}
+
+func Userinfo(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("UserInfo matched:" + r.RequestURI))
+	return
+}
+
+func UserHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("UserInfo matched:" + r.RequestURI))
+	return
+}
+
+
+```
