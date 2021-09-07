@@ -1,4 +1,14 @@
 # Mux
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/obity/mux?color=peru)](https://github.com/obity/mux/releases/latest)
+[![Released API docs](https://img.shields.io/badge/go-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/obity/mux)
+[![Build](https://img.shields.io/github/workflow/status/obity/mux/Go.svg)](#)
+[![Go Report Card](https://goreportcard.com/badge/github.com/obity/mux?color=pink)](https://goreportcard.com/report/github.com/obity/mux)
+[![Lines of code](https://img.shields.io/tokei/lines/github/obity/mux.svg?color=beige)](#)
+[![Downloads of releases](https://img.shields.io/github/downloads/obity/mux/total.svg?color=lavender)](https://github.com/obity/mux/releases/latest)
+[![Languages](https://img.shields.io/github/languages/top/obity/mux.svg?color=yellow)](#)
+[![GitHub go.mod Go version (subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/obity/mux)](#)
+[![GPL3 licensed](https://img.shields.io/github/license/obity/mux.svg)](./LICENSE)
+
 Mux is a simple and efficient route distributor that supports the net/http interface of the standard library.
 Routing data is stored in the prefix tree preTree, supported by https://github.com/obity/pretree.
 
