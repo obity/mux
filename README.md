@@ -1,7 +1,7 @@
 # Mux
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/obity/mux?color=peru)](https://github.com/obity/mux/releases/latest)
 [![Released API docs](https://img.shields.io/badge/go-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/obity/mux)
-[![Build](https://img.shields.io/github/workflow/status/obity/mux/Go.svg)](#)
+[![Build](https://img.shields.io/github/actions/workflow/status/obity/mux/.github/workflows/go.yml?branch=master)](#)
 [![Go Report Card](https://goreportcard.com/badge/github.com/obity/mux?color=pink)](https://goreportcard.com/report/github.com/obity/mux)
 [![Lines of code](https://img.shields.io/tokei/lines/github/obity/mux.svg?color=beige)](#)
 [![Downloads of releases](https://img.shields.io/github/downloads/obity/mux/total.svg?color=lavender)](https://github.com/obity/mux/releases/latest)
